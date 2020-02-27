@@ -4,66 +4,53 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity
 {
-    int batteryLevel = 7;
-    ImageView battery = findViewById (R.id.batteryView);
+    int batteryLevel = 4;
+    ImageView battery;
+    Button use;
+    Button charge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        battery = findViewById (R.id.batteryView);
+        use = findViewById (R.id.useButton);
+        charge = findViewById (R.id.chargeButton);
     }
 
     public void chargePhone (View view)
     {
-        if (batteryLevel == 7)
-        {
-            batteryLevel = 7;
-        }
-        else
-        {
-            batteryLevel++;
-        }
+        batteryLevel++;
 
-        showCharge ();
+        if (batteryLevel <= 6 && batteryLevel >= 0)
+        {
+            battery.setImageLevel (batteryLevel);
+        }
+        else if (batteryLevel > 6)
+        {
+            batteryLevel = 6;
+        }
     }
 
     public void usePhone (View view)
     {
-        if (batteryLevel == 1)
-        {
-            batteryLevel = 1;
-        }
-        else
-        {
-            batteryLevel--;
-        }
+        batteryLevel--;
 
-        showCharge ();
+        if (batteryLevel > 0)
+        {
+            battery.setImageLevel (batteryLevel);
+        }
+        else if (batteryLevel < 0)
+        {
+            batteryLevel = 0;
+        }
     }
 
-    public void showCharge ()
-    {
-        switch (batteryLevel)
-        {
-            case 1:
-                battery.setImageResource (R.drawable.ic_battery_20);
-            case 2:
-                battery.setImageResource (R.drawable.ic_battery_30);
-            case 3:
-                battery.setImageResource (R.drawable.ic_battery_50);
-            case 4:
-                battery.setImageResource (R.drawable.ic_battery_60);
-            case 5:
-                battery.setImageResource (R.drawable.ic_battery_80);
-            case 6:
-                battery.setImageResource (R.drawable.ic_battery_90);
-            case 7:
-                battery.setImageResource (R.drawable.ic_battery_100);
-        }
-    }
 }   //END OF ACTIVITY
